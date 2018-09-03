@@ -24,7 +24,6 @@ const Map = (dispatch, data, map) => {
 
 export const RedrawMap = (dispatch, data, map, heat, total) => {
   const intensityFactor = 0.1 + (0.9 * ((total - data.length)/total));
-  console.log("The intensity is set to: " + intensityFactor);
   const markers = data.map(datum => [
     datum.geometry.y,
     datum.geometry.x,

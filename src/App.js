@@ -1,5 +1,6 @@
 import { diff, patch } from 'virtual-dom';
 import createElement from 'virtual-dom/create-element';
+import { DrawMap, RedrawMap} from './map';
 
 async function app(initModel, update, view, node) {
   let model = initModel;
@@ -7,7 +8,6 @@ async function app(initModel, update, view, node) {
   let rootNode = createElement(currentView);
   node.appendChild(rootNode);
   function dispatch(msg) {
-    console.log("hello from dispatch!");
     model = update(msg, model);
     const updatedView = view(dispatch, model);
     const patches = diff(currentView, updatedView);

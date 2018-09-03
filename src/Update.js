@@ -6,13 +6,16 @@ const FILTER = {
   byStartDate: beginDate =>
     R.filter(datum => new Date(datum.ISSUE_DATE) > new Date(beginDate)),
   byEndDate: endDate =>
-    R.filter(datum => new Date(datum.ISSUE_DATE) < new Date(endDate))
+    R.filter(datum => new Date(datum.ISSUE_DATE) < new Date(endDate)),
+  byPmtStatus: pmtStatus =>
+    R.filter(datum => pmtStatus.test(datum.PmtStatus))
 };
 
 const MSGS = {
   FETCHED_DATA: "FETCHED_DATA",
   UPDATE_ACTIVITY: "UPDATE_ACTIVITY",
   UPDATE_BLD_TYPE: "UPDATE_BLD_TYPE",
+  UPDATE_PMT_STATUS: "UPDATE_PMT_STATUS",
   UPDATE_START_DATE: "FILTER_BY_START_DATE",
   UPDATE_END_DATE: "FILTER_BY_END_DATE",
   UPDATE_MAP: 'UPDATE_MAP'
@@ -40,7 +43,12 @@ export function updateMapMsg(map, heat) {
   }
 }
 
-
+export function updatePmtStatusMsg(pmtStatus) {
+  return {
+    type: MSGS.UPDATE_PMT_STATUS,
+    pmtStatus
+  }
+}
 
 export function dataFetchedMsg(data) {
   return {
@@ -71,6 +79,15 @@ function update(msg, model) {
       const filters = {
         ...model.filters,
         byBLDType: FILTER.byBLDType(bldTypeRegex)
+      };
+      return { ...model, filters, refreshMap: true };
+    }
+    case MSGS.UPDATE_PMT_STATUS: {
+      const pmtStatus = msg.pmtStatus;
+      const pmtStatusRegex = new RegExp(pmtStatus);
+      const filters = {
+        ...model.filters,
+        byPmtStatus: FILTER.byPmtStatus(pmtStatusRegex)
       };
       return { ...model, filters, refreshMap: true };
     }

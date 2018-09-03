@@ -10,6 +10,7 @@ const initModel = {
     byBldType: null,
     byStartDate: null,
     byEndDate: null,
+    byPmtStatus: null,
   },
   data: null,
   total: 0,

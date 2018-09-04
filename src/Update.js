@@ -16,11 +16,25 @@ const MSGS = {
   UPDATE_ACTIVITY: "UPDATE_ACTIVITY",
   UPDATE_BLD_TYPE: "UPDATE_BLD_TYPE",
   UPDATE_PMT_STATUS: "UPDATE_PMT_STATUS",
-  UPDATE_START_DATE: "FILTER_BY_START_DATE",
-  UPDATE_END_DATE: "FILTER_BY_END_DATE",
-  UPDATE_MAP: 'UPDATE_MAP'
+  UPDATE_BEGIN_DATE: "UPDATE_BEGIN_DATE",
+  UPDATE_END_DATE: "UPDATE_END_DATE",
+  UPDATE_MAP: 'UPDATE_MAP',
+  UPDATE_DATE_INPUT_FLAG: 'UPDATE_DATE_INPUT_FLAG'
 };
 
+export function updateBeginDateMsg(beginDate) {
+  return {
+    type: MSGS.UPDATE_BEGIN_DATE,
+    beginDate,
+  }
+}
+
+export function updateEndDateMsg(endDate) {
+  return {
+    type: MSGS.UPDATE_END_DATE,
+    endDate,
+  }
+}
 export function updateBldActivityMsg(activity) {
   return {
     type: MSGS.UPDATE_ACTIVITY,
@@ -40,6 +54,12 @@ export function updateMapMsg(map, heat) {
     type: MSGS.UPDATE_MAP,
     map,
     heat
+  }
+}
+
+export function updateDateInputFlag() {
+  return {
+    type: MSGS.UPDATE_DATE_INPUT_FLAG
   }
 }
 
@@ -99,13 +119,16 @@ function update(msg, model) {
       }
       return { ...model, filters, refreshMap: true};
     }
-    case MSGS.UPDATE_START_DATE: {
-      const startDate = msg.startDate;
+    case MSGS.UPDATE_BEGIN_DATE: {
+      const beginDate = msg.beginDate;
       const filters = {
         ...model.filters,
-        byStartDate: FILTER.byStartDate(startDate)
+        byStartDate: FILTER.byStartDate(beginDate)
       }
       return { ...model, filters, refreshMap: true };
+    }
+    case MSGS.UPDATE_DATE_INPUT_FLAG: {
+      return { ...model, dateInputInit: true }
     }
     case MSGS.UPDATE_MAP: {
       const heat = msg.heat;

@@ -1,6 +1,4 @@
 const initModel = {
-  minDwellingUnits: 0,
-  maxDwellingUnits: Number.MAX_SAFE_INTEGER,
   filters: {
     byActivity: null,
     byBldType: null,

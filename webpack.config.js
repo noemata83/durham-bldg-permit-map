@@ -1,3 +1,5 @@
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 module.exports = {
   mode: 'development',
   entry: ['babel-polyfill', './src/index.js'],
@@ -11,6 +13,7 @@ module.exports = {
     compress: true,
     port: 9000,
   },
+  plugins: [new BundleAnalyzerPlugin()],
   module: {
     rules: [
       {

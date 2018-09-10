@@ -1,4 +1,3 @@
-import L from 'leaflet';
 import 'leaflet.heat';
 import { updateMapMsg } from './Update';
 
